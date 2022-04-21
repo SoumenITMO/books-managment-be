@@ -6,6 +6,7 @@ import com.isbn.books.services.BookService;
 import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import javax.validation.Valid;
 import java.util.List;
 
 @RestController
@@ -28,13 +29,13 @@ public class BookController {
     }
 
     @PostMapping
-    public ResponseEntity<BookDto> addBook() {
+    public ResponseEntity<BookDto> addBook(@Valid @RequestBody BookDto book) {
 
         return ResponseEntity.ok(new BookDto());
     }
 
     @PutMapping
-    public ResponseEntity<BookDto> editBook() {
+    public ResponseEntity<BookDto> editBook(@Valid @RequestBody BookDto book) {
 
         return ResponseEntity.ok(new BookDto());
     }
