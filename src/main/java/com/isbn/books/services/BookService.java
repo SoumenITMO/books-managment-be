@@ -58,4 +58,12 @@ public class BookService {
 
         return getBookById;
     }
+
+    /**
+     *
+     * @param bookId delete the book by id
+     */
+    public void deleteBookById(Long bookId) {
+        bookRepository.deleteById(bookId);
+    }
 }

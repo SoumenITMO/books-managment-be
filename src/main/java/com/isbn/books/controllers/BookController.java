@@ -41,14 +41,14 @@ public class BookController {
     }
 
     @PutMapping
-    public ResponseEntity<BookDto> editBook(@Validated(UpdateBook.class) @RequestBody BookDto book) throws Exception {
+    public ResponseEntity<Void> editBook(@Validated(UpdateBook.class) @RequestBody BookDto book) throws Exception {
         bookService.updateBookData(book);
-        return ResponseEntity.ok(new BookDto());
+        return ResponseEntity.noContent().build();
     }
 
-    @DeleteMapping
-    public ResponseEntity<Void> deleteBook() {
-
+    @DeleteMapping("{bookid}")
+    public ResponseEntity<Void> deleteBook(@PathVariable("bookid") Long bookId) {
+        bookService.deleteBookById(bookId);
         return ResponseEntity.noContent().build();
     }
 }
