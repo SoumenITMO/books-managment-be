@@ -1,7 +1,6 @@
 package com.isbn.books.controllers;
 
 import com.isbn.books.dto.BookDto;
-import com.isbn.books.entities.BookEntity;
 import com.isbn.books.group.validator.UpdateBook;
 import com.isbn.books.services.BookService;
 import lombok.AllArgsConstructor;
