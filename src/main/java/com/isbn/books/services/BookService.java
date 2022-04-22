@@ -37,7 +37,7 @@ public class BookService {
      * @param book
      */
     public void insertNewBook(BookDto book) {
-        bookRepository.save(new BookEntity(book.getIsbn(), book.getAuthor(), book.getTitle()));
+        bookRepository.save(new BookEntity(0L, book.getIsbn(), book.getAuthor(), book.getTitle()));
     }
 
     /**
@@ -49,6 +49,7 @@ public class BookService {
     public BookEntity updateBookData(BookDto book) throws Exception {
         BookEntity getBookById = bookRepository.findById(book.getId()).orElseThrow(() -> new Exception("Book not found"));
 
+        getBookById.setId(book.getId());
         getBookById.setAuthor(book.getAuthor());
         getBookById.setTitle(book.getTitle());
         getBookById.setIsbn(book.getIsbn());
