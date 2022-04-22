@@ -18,9 +18,7 @@
                 <constraints unique="true" />
             </column>
 
-            <column name="author" type="VARCHAR(20)">
-                <constraints unique="true" />
-            </column>
+            <column name="author" type="VARCHAR(20)" />
         </createTable>
     </changeSet>
     <changeSet author="Soumen Banerjee" id="2">
