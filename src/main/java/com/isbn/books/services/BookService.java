@@ -21,7 +21,40 @@ public class BookService {
         return bookRepository.findAll();
     }
 
-    public List<BookEntity> getBooksBySearchedCriteria(BookDto book) {
-        return bookRepository.findAllByAuthorOrTitleOrIsbn(book.getAuthor(), book.getTitle(), book.getIsbn());
+    /**
+     *
+     * @param author
+     * @param title
+     * @param isbn
+     * @return list of books matched by searched criteria
+     */
+    public List<BookEntity> getBooksBySearchedCriteria(String author, String title, String isbn) {
+        return bookRepository.findAllByAuthorOrTitleOrIsbn(author, title, isbn);
+    }
+
+    /**
+     *
+     * @param book
+     */
+    public void insertNewBook(BookDto book) {
+        bookRepository.save(new BookEntity(book.getIsbn(), book.getAuthor(), book.getTitle()));
+    }
+
+    /**
+     *
+     * @param book
+     * @return updated book data
+     * @throws Exception when book not found
+     */
+    public BookEntity updateBookData(BookDto book) throws Exception {
+        BookEntity getBookById = bookRepository.findById(book.getId()).orElseThrow(() -> new Exception("Book not found"));
+
+        getBookById.setAuthor(book.getAuthor());
+        getBookById.setTitle(book.getTitle());
+        getBookById.setIsbn(book.getIsbn());
+
+        bookRepository.save(getBookById);
+
+        return getBookById;
     }
 }
