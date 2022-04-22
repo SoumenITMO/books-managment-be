@@ -2,23 +2,26 @@ package com.isbn.books.services;
 
 import com.isbn.books.dto.BookDto;
 import com.isbn.books.entities.BookEntity;
+import com.isbn.books.mappers.BookEntityMapper;
 import com.isbn.books.repositories.BookRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @AllArgsConstructor
 public class BookService {
 
     private final BookRepository bookRepository;
+    private final BookEntityMapper bookEntityMapper;
 
     /**
      *
      * @return all books
      */
-    public List<BookEntity> getAllBooks() {
-        return bookRepository.findAll();
+    public List<BookDto> getAllBooks() {
+        return bookEntityMapper.toBookDto(bookRepository.findAll());
     }
 
     /**
@@ -28,8 +31,8 @@ public class BookService {
      * @param isbn
      * @return list of books matched by searched criteria
      */
-    public List<BookEntity> getBooksBySearchedCriteria(String author, String title, String isbn) {
-        return bookRepository.findAllByAuthorOrTitleOrIsbn(author, title, isbn);
+    public List<BookDto> getBooksBySearchedCriteria(String author, String title, String isbn) {
+        return bookEntityMapper.toBookDto(bookRepository.findAllByAuthorOrTitleOrIsbn(author, title, isbn));
     }
 
     /**

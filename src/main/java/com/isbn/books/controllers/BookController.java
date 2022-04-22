@@ -19,7 +19,7 @@ public class BookController {
     private final BookService bookService;
 
     @GetMapping("search/{author}/{title}/{isbn}")
-    public ResponseEntity<List<BookEntity>> getBooksBySearchedCriteria(
+    public ResponseEntity<List<BookDto>> getBooksBySearchedCriteria(
             @PathVariable(value = "author", required = false) String author,
             @PathVariable(value = "title", required = false) String title,
             @PathVariable(value = "isbn", required = false) String isbn) {
@@ -28,7 +28,7 @@ public class BookController {
     }
 
     @GetMapping("all")
-    public ResponseEntity<List<BookEntity>> getAllBooks() {
+    public ResponseEntity<List<BookDto>> getAllBooks() {
 
         return ResponseEntity.ok(bookService.getAllBooks());
     }
@@ -42,12 +42,14 @@ public class BookController {
 
     @PutMapping
     public ResponseEntity<Void> editBook(@Validated(UpdateBook.class) @RequestBody BookDto book) throws Exception {
+
         bookService.updateBookData(book);
         return ResponseEntity.noContent().build();
     }
 
     @DeleteMapping("{bookid}")
     public ResponseEntity<Void> deleteBook(@PathVariable("bookid") Long bookId) {
+
         bookService.deleteBookById(bookId);
         return ResponseEntity.noContent().build();
     }
