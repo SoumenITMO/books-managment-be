@@ -1,6 +1,8 @@
 package com.isbn.books.entities;
 
+import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 import javax.persistence.Entity;
 import javax.persistence.Table;
@@ -12,6 +14,8 @@ import javax.persistence.Column;
 @Getter
 @Setter
 @Entity
+@NoArgsConstructor
+@AllArgsConstructor
 @Table(name = "books")
 public class BookEntity {
 
@@ -27,4 +31,10 @@ public class BookEntity {
 
     @Column(name = "title")
     private String title;
+
+    public BookEntity(String isbn, String author, String title) {
+        this.isbn = isbn;
+        this.title = title;
+        this.author = author;
+    }
 }
