@@ -7,7 +7,7 @@
     <changeSet author="Soumen Banerjee" id="1">
         <createTable tableName="books">
             <column name="id" type="BIGSERIAL" autoIncrement="true">
-                <constraints nullable="false" primaryKey="true" primaryKeyName="iban_id_pkey"/>
+                <constraints nullable="false" primaryKey="true" primaryKeyName="isbn_id_pkey"/>
             </column>
 
             <column name="isbn" type="VARCHAR(25)">
