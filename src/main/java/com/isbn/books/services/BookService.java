@@ -47,7 +47,7 @@ public class BookService {
      * @throws Exception when book not found
      */
     public BookEntity updateBookData(BookDto book) throws Exception {
-        BookEntity getBookById = bookRepository.findById(book.getId()).orElseThrow(() -> new Exception("Book not found"));
+        BookEntity getBookById = bookRepository.findById(book.getId()).orElseThrow(() -> new Exception("Can not update, Book not found"));
 
         getBookById.setId(book.getId());
         getBookById.setAuthor(book.getAuthor());
@@ -63,7 +63,8 @@ public class BookService {
      *
      * @param bookId delete the book by id
      */
-    public void deleteBookById(Long bookId) {
+    public void deleteBookById(Long bookId) throws Exception {
+        bookRepository.findById(bookId).orElseThrow(() -> new Exception("Can not delete, Book not found."));
         bookRepository.deleteById(bookId);
     }
 }
