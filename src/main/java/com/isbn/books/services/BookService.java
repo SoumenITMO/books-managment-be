@@ -31,7 +31,7 @@ public class BookService {
      * @return list of books matched by searched criteria
      */
     public List<BookDto> getBooksBySearchedCriteria(String author, String title, String isbn) {
-        return bookEntityMapper.toBookDto(bookRepository.findByAuthorLikeAndTitleLikeAndIsbnLike(author, title, isbn));
+        return bookEntityMapper.toBookDto(bookRepository.findByAuthorLikeOrTitleLikeOrIsbnLike(author, title, isbn));
     }
 
     /**
