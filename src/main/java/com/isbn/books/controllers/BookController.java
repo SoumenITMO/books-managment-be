@@ -1,6 +1,7 @@
 package com.isbn.books.controllers;
 
 import com.isbn.books.dto.BookDto;
+import com.isbn.books.entities.BookEntity;
 import com.isbn.books.group.validator.UpdateBook;
 import com.isbn.books.services.BookService;
 import lombok.AllArgsConstructor;
@@ -18,7 +19,7 @@ public class BookController {
     private final BookService bookService;
 
     @GetMapping("search/{author}/{title}/{isbn}")
-    public ResponseEntity<List<BookDto>> getBooksBySearchedCriteria(
+    public ResponseEntity<List<BookEntity>> getBooksBySearchedCriteria(
             @PathVariable(value = "author", required = false) String author,
             @PathVariable(value = "title", required = false) String title,
             @PathVariable(value = "isbn", required = false) String isbn) {
@@ -27,7 +28,7 @@ public class BookController {
     }
 
     @GetMapping("all")
-    public ResponseEntity<List<BookDto>> getAllBooks() {
+    public ResponseEntity<List<BookEntity>> getAllBooks() {
 
         return ResponseEntity.ok(bookService.getAllBooks());
     }
@@ -41,14 +42,12 @@ public class BookController {
 
     @PutMapping
     public ResponseEntity<Void> editBook(@Validated(UpdateBook.class) @RequestBody BookDto book) throws Exception {
-
         bookService.updateBookData(book);
         return ResponseEntity.noContent().build();
     }
 
     @DeleteMapping("{bookid}")
-    public ResponseEntity<Void> deleteBook(@PathVariable("bookid") Long bookId) {
-
+    public ResponseEntity<Void> deleteBook(@PathVariable("bookid") Long bookId) throws Exception {
         bookService.deleteBookById(bookId);
         return ResponseEntity.noContent().build();
     }
