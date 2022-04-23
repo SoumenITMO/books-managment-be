@@ -17,11 +17,11 @@ public class BookController {
 
     private final BookService bookService;
 
-    @GetMapping("search/{author}/{title}/{isbn}")
+    @GetMapping("search")
     public ResponseEntity<List<BookDto>> getBooksBySearchedCriteria(
-            @PathVariable(value = "author", required = false) String author,
-            @PathVariable(value = "title", required = false) String title,
-            @PathVariable(value = "isbn", required = false) String isbn) {
+            @RequestParam(required = false) String author,
+            @RequestParam(required = false) String title,
+            @RequestParam(required = false) String isbn) {
 
         return ResponseEntity.ok(bookService.getBooksBySearchedCriteria(author, title, isbn));
     }
