@@ -9,4 +9,6 @@ import java.util.List;
 public interface BookRepository extends JpaRepository<BookEntity, Long> {
 
     List<BookEntity> findAllByAuthorOrTitleOrIsbn(String author, String title, String isbn);
+
+    List<BookEntity> findAllByFilename(String filename);
 }
