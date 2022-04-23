@@ -3,7 +3,6 @@ package com.isbn.books.dto;
 import com.isbn.books.group.validator.UpdateBook;
 import lombok.Getter;
 import lombok.Setter;
-
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 
