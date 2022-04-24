@@ -33,7 +33,7 @@ public class BookController {
     }
 
     @PostMapping
-    public ResponseEntity<Void> addBook(@Valid @RequestBody BookDto book) {
+    public ResponseEntity<Void> addBook(@Valid @RequestBody BookDto book) throws Exception {
 
         bookService.insertNewBook(book);
         return ResponseEntity.noContent().build();

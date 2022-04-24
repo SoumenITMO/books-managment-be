@@ -2,6 +2,7 @@ package com.isbn.books.services;
 
 import com.isbn.books.dto.BookDto;
 import com.isbn.books.entities.BookEntity;
+import com.isbn.books.helper.IsbnValidator;
 import com.isbn.books.mappers.BookEntityMapper;
 import com.isbn.books.repositories.BookRepository;
 import lombok.AllArgsConstructor;
@@ -12,6 +13,7 @@ import java.util.List;
 @AllArgsConstructor
 public class BookService {
 
+    private final IsbnValidator isbnValidator;
     private final BookRepository bookRepository;
     private final BookEntityMapper bookEntityMapper;
 
@@ -38,7 +40,10 @@ public class BookService {
      *
      * @param book
      */
-    public void insertNewBook(BookDto book) {
+    public void insertNewBook(BookDto book) throws Exception {
+        if(isbnValidator.validateISBN(book.getIsbn()).equals("")) {
+            throw new Exception("Invalid ISBN");
+        }
         bookRepository.save(new BookEntity(0L, book.getIsbn(), book.getAuthor(), book.getTitle()));
     }
 

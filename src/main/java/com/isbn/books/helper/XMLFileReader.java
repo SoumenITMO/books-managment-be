@@ -1,6 +1,7 @@
 package com.isbn.books.helper;
 
 import com.isbn.books.entities.BookEntity;
+import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Component;
 import org.springframework.web.multipart.MultipartFile;
 import org.w3c.dom.Document;
@@ -13,9 +14,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Component
+@AllArgsConstructor
 public class XMLFileReader {
 
-    private final List<BookEntity> books = new ArrayList<>();
+    private final IsbnValidator isbnValidator;
 
     /**
      *
@@ -23,6 +25,8 @@ public class XMLFileReader {
      * @throws Exception when XML has wrong format or nodes
      */
     public List<BookEntity> processXMLFile(MultipartFile file) throws Exception {
+        List<BookEntity> books = new ArrayList<>();
+
         if (!file.getContentType().equals("application/xml")) {
             throw new Exception("Invalid File Format");
         }
@@ -46,7 +50,7 @@ public class XMLFileReader {
                 String author = element.getElementsByTagName("Author").item(0).getTextContent();
                 String isbnData = node.getAttributes().getNamedItem("ISBN").getTextContent().replace("-", "");
 
-                if(validateISBN(isbnData).equals(isbnData)) {
+                if(isbnValidator.validateISBN(isbnData).equals(isbnData)) {
                     books.add(new BookEntity(isbnData, author, title));
                 } else {
                     throw new Exception("Invalid ISBN contain in data file");
@@ -56,40 +60,5 @@ public class XMLFileReader {
         }
 
         return books;
-    }
-
-    /**
-     *
-     * @param isbn value from data file
-     * @return if ISBN is valid it will return valid ISBN, return empty in case invalid ISBN
-     * @throws Exception when it contains invalid ISBN
-     */
-    private String validateISBN(String isbn) throws Exception {
-        if((isbn.length() == 10) || (isbn.length() == 13)) {
-            isbn = isbnValidator(isbn.toCharArray()) ? isbn : "";
-        } else {
-            throw new Exception("Invalid ISBN contain in data file");
-        }
-        return isbn;
-    }
-
-    /**
-     *
-     * @param isbnChars as iban chars
-     * @return boolean if ISBN is valid or not
-     */
-    private boolean isbnValidator(char[] isbnChars) {
-        int index = 0;
-        int reminder;
-        int isbnSegmentSum = 0;
-        int isbnNumericValue;
-
-        while(isbnChars.length > index) {
-            reminder = (index % 2) == 0 ? 1 : 3;
-            isbnNumericValue = Character.getNumericValue(isbnChars[index]);
-            isbnSegmentSum += isbnNumericValue * reminder;
-            index++;
-        }
-        return isbnChars.length == 13 ? isbnSegmentSum % 10 == 0 : isbnSegmentSum % 11 == 0;
     }
 }
