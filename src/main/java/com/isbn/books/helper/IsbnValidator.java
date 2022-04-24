@@ -29,13 +29,15 @@ public class IsbnValidator {
     private boolean isbnValidator(char[] isbnChars) {
         int index = 0;
         int reminder;
-        int isbnSegmentSum = 0;
         int isbnNumericValue;
+        int isbnSegmentSum = 0;
+        int isbnLength = isbnChars.length;
 
         while(isbnChars.length > index) {
             reminder = (index % 2) == 0 ? 1 : 3;
             isbnNumericValue = Character.getNumericValue(isbnChars[index]);
-            isbnSegmentSum += isbnNumericValue * reminder;
+            isbnSegmentSum += isbnChars.length == 13 ? isbnNumericValue * reminder : isbnNumericValue * isbnLength;
+            isbnLength--;
             index++;
         }
         return isbnChars.length == 13 ? isbnSegmentSum % 10 == 0 : isbnSegmentSum % 11 == 0;
