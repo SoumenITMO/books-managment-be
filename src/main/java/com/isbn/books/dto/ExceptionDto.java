@@ -16,6 +16,7 @@ public class ExceptionDto {
     private String message;
 
     public ExceptionDto(AppException e) {
+
         setCode(e.getCode());
         setMessage(e.getMessage());
     }

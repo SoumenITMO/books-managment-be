@@ -41,12 +41,14 @@ public class BookController {
 
     @PutMapping
     public ResponseEntity<Void> editBook(@Validated(UpdateBook.class) @RequestBody BookDto book) throws Exception {
+
         bookService.updateBookData(book);
         return ResponseEntity.noContent().build();
     }
 
     @DeleteMapping("{bookid}")
     public ResponseEntity<Void> deleteBook(@PathVariable("bookid") Long bookId) throws Exception {
+
         bookService.deleteBookById(bookId);
         return ResponseEntity.noContent().build();
     }
