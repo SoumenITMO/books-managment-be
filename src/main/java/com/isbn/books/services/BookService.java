@@ -33,6 +33,7 @@ public class BookService {
      * @return list of books matched by searched criteria
      */
     public List<BookDto> getBooksBySearchedCriteria(String author, String title, String isbn) {
+
         return bookEntityMapper.toBookDto(bookRepository.findBooksByProvidedSearchCriteria(author, title, isbn));
     }
 
@@ -44,6 +45,7 @@ public class BookService {
         if(isbnValidator.validateISBN(book.getIsbn()).equals("")) {
             throw new Exception("Invalid ISBN");
         }
+
         bookRepository.save(new BookEntity(0L, book.getIsbn(), book.getAuthor(), book.getTitle()));
     }
 
@@ -71,6 +73,7 @@ public class BookService {
      * @param bookId delete the book by id
      */
     public void deleteBookById(Long bookId) throws Exception {
+
         bookRepository.findById(bookId).orElseThrow(() -> new Exception("Can not delete, Book not found."));
         bookRepository.deleteById(bookId);
     }
