@@ -22,10 +22,23 @@
         </createTable>
     </changeSet>
     <changeSet author="Soumen Banerjee" id="2">
+        <createTable tableName="filehistory">
+            <column name="id" type="BIGSERIAL" autoIncrement="true">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="file_history_pkey"/>
+            </column>
+            <column name="filename" type="VARCHAR(100)" />
+        </createTable>
+    </changeSet>
+    <changeSet author="Soumen Banerjee" id="3">
         <loadData tableName="books" file="db/changelog/data/books.csv">
             <column header="isbn" name="isbn" />
             <column header="title" name="title" />
             <column header="author" name="author" />
+            <column header="filename" name="filename" />
+        </loadData>
+    </changeSet>
+    <changeSet author="Soumen Banerjee" id="4">
+        <loadData tableName="filehistory" file="db/changelog/data/filehistory.csv">
             <column header="filename" name="filename" />
         </loadData>
     </changeSet>

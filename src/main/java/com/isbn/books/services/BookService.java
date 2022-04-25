@@ -1,13 +1,19 @@
 package com.isbn.books.services;
 
 import com.isbn.books.dto.BookDto;
+import com.isbn.books.dto.BookHistory;
 import com.isbn.books.entities.BookEntity;
+import com.isbn.books.entities.FileHistory;
 import com.isbn.books.helper.IsbnValidator;
 import com.isbn.books.mappers.BookEntityMapper;
 import com.isbn.books.repositories.BookRepository;
+import com.isbn.books.repositories.FileHistoryRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
+
+import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @AllArgsConstructor
@@ -16,13 +22,22 @@ public class BookService {
     private final IsbnValidator isbnValidator;
     private final BookRepository bookRepository;
     private final BookEntityMapper bookEntityMapper;
+    private final FileHistoryRepository fileHistoryRepository;
 
     /**
      *
      * @return all books
      */
-    public List<BookDto> getAllBooks() {
-        return bookEntityMapper.toBookDto(bookRepository.findAll());
+    public List<BookHistory> getAllBooks() {
+
+        List<BookHistory> bookHistories = new ArrayList<>();
+        List<FileHistory> fileHistories = fileHistoryRepository.findAll().stream().distinct().collect(Collectors.toList());
+
+        fileHistories.forEach(fileName -> {
+            bookHistories.add(new BookHistory(fileName.getFileName(),
+                    bookEntityMapper.toBookDto(bookRepository.findAllByFilename(fileName.getFileName()))));
+        });
+        return bookHistories;
     }
 
     /**
