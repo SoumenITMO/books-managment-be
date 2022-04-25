@@ -58,7 +58,7 @@ public class XMLFileReader {
                 }
 
                 if(isbnValidator.validateISBN(isbn).equals(isbn)) {
-                    books.add(new BookEntity(isbnWithDelimeter, author, title));
+                    books.add(new BookEntity(isbnWithDelimeter, author, title, file.getOriginalFilename()));
                 } else {
                     throw new Exception("Invalid ISBN contain in data file");
                 }

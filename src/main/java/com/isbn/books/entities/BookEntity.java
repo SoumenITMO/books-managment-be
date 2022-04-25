@@ -35,11 +35,12 @@ public class BookEntity {
     @Column(name = "filename")
     private String filename;
 
-    public BookEntity(String isbn, String author, String title) {
+    public BookEntity(String isbn, String author, String title, String filename) {
 
         this.isbn = isbn;
         this.title = title;
         this.author = author;
+        this.filename = filename;
     }
 
     public BookEntity(Long id, String isbn, String author, String title) {
