@@ -22,7 +22,7 @@ public class FileUploadingService {
 
         List<BookEntity> books = xmlFileReader.processXMLFile(file);
         bookRepository.saveAll(books);
-        System.out.println("Uploaded file name --> " + file.getOriginalFilename());
+
         fileHistoryRepository.save(new FileHistory(file.getOriginalFilename()));
     }
 }
