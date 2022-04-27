@@ -27,10 +27,6 @@ public class XMLFileReader {
      */
     public List<BookEntity> processXMLFile(MultipartFile file) throws Exception {
 
-        if (!file.getContentType().equals("application/xml")) {
-            throw new Exception("Invalid File");
-        }
-
         int index = 0;
         List<BookEntity> books = new ArrayList<>();
         String regex = "^(?=(?:\\D*\\d){10}(?:(?:\\D*\\d){3})?$)[\\d-]+$";
