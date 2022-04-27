@@ -61,9 +61,11 @@ public class BookService {
      * @param book
      */
     public void insertNewBook(BookDto book) throws Exception {
+
         if(isbnValidator.validateISBN(book.getIsbn()).equals("")) {
             throw new Exception("Invalid ISBN");
         }
+
         bookRepository.save(new BookEntity(book.getIsbn(), book.getTitle(), book.getAuthor(), null));
     }
 
@@ -74,6 +76,11 @@ public class BookService {
      * @throws Exception when book not found
      */
     public BookEntity updateBookData(BookDto book) throws Exception {
+
+        if(isbnValidator.validateISBN(book.getIsbn()).equals("")) {
+            throw new Exception("Invalid ISBN");
+        }
+
         BookEntity getBookById = bookRepository.findById(book.getId()).orElseThrow(() -> new Exception("Can not update, Book not found"));
 
         getBookById.setId(book.getId());
@@ -97,6 +104,7 @@ public class BookService {
     }
 
     public BookDto getBookById(Long bookId) throws Exception {
+
         BookEntity getBookDataById = bookRepository.findById(bookId).orElseThrow(() -> new Exception("Book could not found"));
         return bookEntityMapper.toBookDto(getBookDataById);
     }
