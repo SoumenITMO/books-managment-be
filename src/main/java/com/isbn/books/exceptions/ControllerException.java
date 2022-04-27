@@ -22,20 +22,9 @@ public class ControllerException {
 
     @ResponseBody
     @ExceptionHandler(Exception.class)
-    public ResponseEntity<ExceptionDto> handleAllExceptions(Exception exception, Errors errors) {
-
-        ExceptionDto exceptionDto;
-
-        String invalidInputMessages = errors.getFieldErrors().stream()
-                .map(DefaultMessageSourceResolvable::getDefaultMessage).collect(Collectors.joining(", "));
-
-        if(errors.hasErrors()) {
-            exceptionDto = new ExceptionDto(ExceptionCodes.INVALID_FIELD_DATA, invalidInputMessages);
-        } else {
-            exceptionDto = new ExceptionDto(ExceptionCodes.UNMAPPED_EXCEPTION_CODE, exception.getMessage());
-        }
-
-        return wrapIntoResponseEntity(exceptionDto, HttpStatus.BAD_REQUEST);
+    public ResponseEntity<ExceptionDto> handleAllExceptions(Exception exception) {
+        return wrapIntoResponseEntity(new ExceptionDto(ExceptionCodes.UNMAPPED_EXCEPTION_CODE, exception.getMessage()),
+                HttpStatus.BAD_REQUEST);
     }
 
     private ResponseEntity<ExceptionDto> wrapIntoResponseEntity (AppException ex, HttpStatus status){
