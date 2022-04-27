@@ -34,7 +34,7 @@ public class BookService {
 
         fileHistories.forEach(fileName -> {
             bookHistories.add(new BookHistory(fileName.getFileName(),
-                    bookEntityMapper.toBookDto(bookRepository.findAllByFilename(fileName.getFileName()))));
+                    bookEntityMapper.toBookDtos(bookRepository.findAllByFilename(fileName.getFileName()))));
         });
         return bookHistories;
     }
@@ -48,7 +48,7 @@ public class BookService {
      */
     public List<BookDto> getBooksBySearchedCriteria(String author, String title, String isbn) {
 
-        return bookEntityMapper.toBookDto(bookRepository.findBooksByProvidedSearchCriteria(author, title, isbn));
+        return bookEntityMapper.toBookDtos(bookRepository.findBooksByProvidedSearchCriteria(author, title, isbn));
     }
 
     /**
@@ -90,5 +90,10 @@ public class BookService {
 
         bookRepository.findById(bookId).orElseThrow(() -> new Exception("Can not delete, Book not found."));
         bookRepository.deleteById(bookId);
+    }
+
+    public BookDto getBookById(Long bookId) throws Exception {
+        BookEntity getBookDataById = bookRepository.findById(bookId).orElseThrow(() -> new Exception("Book could not found"));
+        return bookEntityMapper.toBookDto(getBookDataById);
     }
 }

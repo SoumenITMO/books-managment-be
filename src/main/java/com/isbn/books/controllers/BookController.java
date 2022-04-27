@@ -27,6 +27,11 @@ public class BookController {
         return ResponseEntity.ok(bookService.getBooksBySearchedCriteria(author, title, isbn));
     }
 
+    @GetMapping("{bookId}")
+    public ResponseEntity<BookDto> getBookById(@PathVariable("bookId")Long bookId) throws Exception {
+        return ResponseEntity.ok().body(bookService.getBookById(bookId));
+    }
+
     @GetMapping("all")
     public ResponseEntity<List<BookHistory>> getAllBooks() {
 
