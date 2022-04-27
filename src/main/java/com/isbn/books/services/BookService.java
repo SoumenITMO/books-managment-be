@@ -30,12 +30,17 @@ public class BookService {
     public List<BookHistory> getAllBooks() {
 
         List<BookHistory> bookHistories = new ArrayList<>();
+        List<BookDto> getBooksWithoutFilename = bookEntityMapper.toBookDtos(bookRepository.findAllByFilenameNull());
         List<FileHistory> fileHistories = fileHistoryRepository.findAll().stream().distinct().collect(Collectors.toList());
 
         fileHistories.forEach(fileName -> {
             bookHistories.add(new BookHistory(fileName.getFileName(),
                     bookEntityMapper.toBookDtos(bookRepository.findAllByFilename(fileName.getFileName()))));
         });
+
+        if(getBooksWithoutFilename.size() > 0) {
+            bookHistories.add(new BookHistory(null, bookEntityMapper.toBookDtos(bookRepository.findAllByFilenameNull())));
+        }
         return bookHistories;
     }
 
@@ -59,8 +64,7 @@ public class BookService {
         if(isbnValidator.validateISBN(book.getIsbn()).equals("")) {
             throw new Exception("Invalid ISBN");
         }
-
-        bookRepository.save(new BookEntity(0L, book.getIsbn(), book.getAuthor(), book.getTitle()));
+        bookRepository.save(new BookEntity(book.getIsbn(), book.getTitle(), book.getAuthor(), null));
     }
 
     /**

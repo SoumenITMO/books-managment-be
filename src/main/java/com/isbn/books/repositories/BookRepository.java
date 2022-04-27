@@ -15,5 +15,7 @@ public interface BookRepository extends JpaRepository<BookEntity, Long> {
     List<BookEntity> findBooksByProvidedSearchCriteria(@Param("author")String author,
                                                        @Param("title")String title, @Param("isbn")String isbn);
 
+    List<BookEntity> findAllByFilenameNull();
+
     List<BookEntity> findAllByFilename(String filename);
 }

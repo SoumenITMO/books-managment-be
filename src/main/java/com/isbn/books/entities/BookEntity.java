@@ -42,12 +42,4 @@ public class BookEntity {
         this.author = author;
         this.filename = filename;
     }
-
-    public BookEntity(Long id, String isbn, String author, String title) {
-
-        this.id = id;
-        this.isbn = isbn;
-        this.title = title;
-        this.author = author;
-    }
 }
