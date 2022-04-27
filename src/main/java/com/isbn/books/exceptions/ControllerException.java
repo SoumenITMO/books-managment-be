@@ -1,14 +1,11 @@
 package com.isbn.books.exceptions;
 
 import com.isbn.books.dto.ExceptionDto;
-import org.springframework.context.support.DefaultMessageSourceResolvable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseBody;
-import java.util.stream.Collectors;
 
 @ControllerAdvice
 public class ControllerException {
