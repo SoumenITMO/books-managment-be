@@ -23,6 +23,7 @@ import java.util.List;
 @AllArgsConstructor
 public class FileDownloadService {
 
+    private List<BookEntity> books;
     private final BookRepository bookRepository;
 
     /**
@@ -35,12 +36,11 @@ public class FileDownloadService {
      */
     public void getFileContent(HttpServletResponse httpServletResponse, String fileName) throws Exception {
 
-        List<BookEntity> books = bookRepository.findAllByFilename(fileName);
-
+        books = bookRepository.findAllByFilename(fileName).size() > 0 ? bookRepository.findAllByFilename(fileName) :
+                bookRepository.findAllByFilenameNull();
         if(books.size() == 0) {
             throw new Exception("No data found accoding to this file");
         }
-
         generateXMLFile(books, httpServletResponse, fileName);
     }
 
