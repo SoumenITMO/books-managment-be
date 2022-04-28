@@ -22,7 +22,6 @@ public class BookService {
     private final BookRepository bookRepository;
     private final BookEntityMapper bookEntityMapper;
     private final FileHistoryRepository fileHistoryRepository;
-    private List<BookDto> books = new ArrayList<>();
 
     /**
      *
