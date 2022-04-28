@@ -51,9 +51,18 @@ public class BookService {
      * @param isbn
      * @return list of books matched by searched criteria
      */
-    public List<BookDto> getBooksBySearchedCriteria(String author, String title, String isbn) {
+    public List<BookHistory> getBooksBySearchedCriteria(String author, String title, String isbn) {
 
-        return bookEntityMapper.toBookDtos(bookRepository.findBooksByProvidedSearchCriteria(author, title, isbn));
+        List<BookHistory> searchResult = new ArrayList<>();
+
+        List<BookEntity> searchedBooks = bookRepository.findBooksByProvidedSearchCriteria(author, title, isbn);
+        List<String> fileNames = searchedBooks.stream().map(BookEntity::getFilename).distinct().collect(Collectors.toList());
+
+        fileNames.forEach(getFileName -> {
+            searchResult.add(new BookHistory(getFileName, bookEntityMapper.toBookDtos(searchedBooks.stream()
+                    .filter(file -> file.getFilename().equals(getFileName)).collect(Collectors.toList()))));
+        });
+        return searchResult;
     }
 
     /**

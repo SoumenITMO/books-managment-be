@@ -19,7 +19,7 @@ public class BookController {
     private final BookService bookService;
 
     @GetMapping("search")
-    public ResponseEntity<List<BookDto>> getBooksBySearchedCriteria(
+    public ResponseEntity<List<BookHistory>> getBooksBySearchedCriteria(
             @RequestParam(required = false) String author,
             @RequestParam(required = false) String title,
             @RequestParam(required = false) String isbn) {
